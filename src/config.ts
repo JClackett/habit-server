@@ -30,7 +30,7 @@ export const sessionOptions = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: false,
+    secure: env == "production",
     maxAge: 1000 * 60 * 60 * 24 * 7 * 365, // 7 years
   },
 }
