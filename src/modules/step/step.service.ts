@@ -1,5 +1,5 @@
-import dayjs, { UnitType } from "dayjs"
-import { MoreThan, Between } from "typeorm"
+import dayjs from "dayjs"
+import { Between } from "typeorm"
 
 import { Step } from "./step.entity"
 import { CreateStepData } from "./step.inputs"
@@ -18,9 +18,12 @@ export class StepService {
     const startOfInterval = dayjs(startDate)
       .subtract(1, "day")
       .startOf("week")
+      .add(1, "day")
+
     const endOfInterval = dayjs(startDate)
       .subtract(1, "day")
       .endOf("week")
+      .add(1, "day")
 
     const count = await Step.getRepository().count({
       habit,
