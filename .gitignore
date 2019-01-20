@@ -1,0 +1,13 @@
+node_modules
+build
+.cache
+dist
+.env
+
+coverage
+.expo
+npm-debug.*
+*.jks
+*.p12
+*.key
+*.mobileprovision
