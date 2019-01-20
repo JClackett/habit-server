@@ -2,8 +2,9 @@ import session from "express-session"
 import "dotenv/config"
 
 import connectRedis from "connect-redis"
-const RedisStore = connectRedis(session)
 import { buildSchema } from "type-graphql"
+
+import { redis } from "./redis"
 
 import { authChecker } from "./lib/authChecker"
 import { UserResolver } from "./modules/user/user.resolver"
@@ -17,18 +18,13 @@ export const cors = {
   origin: ["*"],
 }
 
-const redisOptions: any = {
-  development: {},
-  production: {
-    url: process.env.REDIS_URL,
-  },
-}
+const RedisStore = connectRedis(session)
 
 export const port = process.env.PORT || 5000
 export const path = "/graphql"
 
 export const sessionOptions = {
-  store: new RedisStore(redisOptions[env]),
+  store: new RedisStore({ client: redis as any }),
   name: "habit.cookie",
   secret: process.env.APP_SECRET || "woooooooopp",
   resave: false,
