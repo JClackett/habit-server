@@ -6,32 +6,22 @@ import session from "express-session"
 import morgan from "morgan"
 import { useContainer, formatArgumentValidationError } from "type-graphql"
 import { Container } from "typedi"
+
+import createDBConnection from "./db"
 import { sessionOptions, cors, port, createSchema } from "./config"
-import { getConnectionOptions, createConnection } from "typeorm"
 
 useContainer(Container)
 
 async function main() {
   try {
-    // Create DB connection
-    const options = await getConnectionOptions(process.env.NODE_ENV)
+    await createDBConnection()
 
-    await createConnection({
-      ...options,
-      name: "default",
-      // @ts-ignore
-      url: process.env.DATABASE_URL,
-    })
-
-    // Create graphql schema
     const schema = await createSchema()
 
-    // Set up express
     const app = express()
       .use(morgan("dev"))
       .use(session(sessionOptions))
 
-    // Set up apollo server
     const apolloServer = new ApolloServer({
       schema,
       context: ({ req, res }: { req: Request; res: Response }) => ({

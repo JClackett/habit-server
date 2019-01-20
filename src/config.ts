@@ -1,5 +1,4 @@
 import session from "express-session"
-import "dotenv/config"
 
 import connectRedis from "connect-redis"
 import { buildSchema } from "type-graphql"
@@ -15,7 +14,7 @@ export const env = process.env.NODE_ENV || "development"
 
 export const cors = {
   credentials: true,
-  origin: ["*"],
+  origin: "*",
 }
 
 const RedisStore = connectRedis(session)
@@ -31,7 +30,7 @@ export const sessionOptions = {
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: env === "production",
+    secure: false,
     maxAge: 1000 * 60 * 60 * 24 * 7 * 365, // 7 years
   },
 }
