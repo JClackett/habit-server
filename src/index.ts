@@ -19,6 +19,7 @@ async function main() {
     const schema = await createSchema()
 
     const app = express()
+      .enable("trust proxy")
       .use(morgan("dev"))
       .use(session(sessionOptions))
 
