@@ -1,12 +1,11 @@
 import { Connection } from "typeorm"
 import { useContainer } from "type-graphql"
+import faker from "faker"
 import { Container } from "typedi"
 
 import { graphqlCall } from "../../../testUtils/graphqlCall"
 import { testConn } from "../../../testUtils/testConn"
 import createUserSession from "../../../testUtils/createUserSession"
-import { Habit } from "../habit.entity"
-import faker = require("faker")
 
 useContainer(Container)
 

@@ -52,6 +52,6 @@ describe("Me", () => {
     const response = await graphqlCall({
       source: meQuery,
     })
-    expect(response.errors![0].message).toContain("Access denied!")
+    expect(response.data!.me).toBeNull()
   })
 })
