@@ -4,7 +4,7 @@
   "description": "Habit server",
   "license": "MIT",
   "scripts": {
-    "start": "tsnd --respawn src/index.ts",
+    "start": "tsnd --respawn --no-notify src/index.ts",
     "build": "rimraf dist && tsc --build",
     "test": "ts-node ./src/testUtils/setup.ts && jest --watch --detectOpenHandles",
     "heroku-postbuild": "yarn build"

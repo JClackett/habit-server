@@ -9,7 +9,7 @@ import {
 
 import { Step } from "./step.entity"
 import { StepService } from "./step.service"
-import { CreateStepData } from "./step.inputs"
+import { StepData } from "./step.inputs"
 
 import { StepPolicyMiddleware } from "./step.middleware"
 
@@ -33,8 +33,19 @@ export class StepResolver {
   @Authorized()
   @Mutation(() => Step)
   @UseMiddleware(StepPolicyMiddleware)
-  async createStep(@Arg("data") data: CreateStepData): Promise<Step> {
+  async createStep(@Arg("data") data: StepData): Promise<Step> {
     const step = await this.stepService.create(data)
     return step
+  }
+
+  // DESTROY STEP
+  @Authorized()
+  @Mutation(() => Boolean)
+  @UseMiddleware(StepPolicyMiddleware)
+  async destroyStep(
+    @Arg("habitId") habitId: string,
+    @Arg("startDate") startDate: string,
+  ): Promise<boolean> {
+    return await this.stepService.destroy(habitId, startDate)
   }
 }
